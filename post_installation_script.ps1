@@ -8,7 +8,7 @@ write-host ' installed azure module....'; [datetime]::Now
 
 $s_name = "vinayblob1"
 
-$pass = "u0Wsq7tXPkiUQjclzZqy0tfc0OYgP8S62/tmCrA3ig3QTXLGNNA5rXcfh6r24WiYlIOwLicOUKu26eXWDgeVqQ=="
+$pass = "ryhREPlM4WP8W6J2c7m0PAR4b3e6+R0fmKSJm8CNjLL6fIl5CR5zDhYGgCUGNhku/bfWrtZEIn1BEpw5PLg76g=="
 
 
 $ctx = new-azurestoragecontext -StorageAccountName $s_name -StorageAccountKey $pass
