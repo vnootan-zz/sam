@@ -1,3 +1,5 @@
+Start-Transcript -Path C:\postinstallation.Log
+
 write-host ' installing NuGet module....'; [datetime]::Now
 Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
 write-host ' installed NuGet module....'; [datetime]::Now
@@ -50,4 +52,5 @@ else {
 }
 }
 exit 1
-		
+
+Stop-Transcript
