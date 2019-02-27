@@ -22,4 +22,10 @@ write-host ' copying solarwindinstaller  from azure blob....'; [datetime]::Now
 Get-AzureStorageBlobContent -Blob Solarwinds-Orion-SAM-6.6.1-OfflineInstaller.exe  -Container vinay-storage-account-container -Destination C:\Windows\Temp\ -Context $ctx
 write-host ' copied solarwindinstaller  from azure blob....'; [datetime]::Now
 
+$ResourceGroupName = "testResourceGroup"
+$CustVMname = "testvm"
+$customscriptname = "preinstall.ps1"
+
+Remove-AzurermVMCustomScriptExtension -ResourceGroupName $ResourceGroupName -VMName $CustVMname –Name $customscriptname -Force
+
 Stop-Transcript
