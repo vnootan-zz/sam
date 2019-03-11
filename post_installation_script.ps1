@@ -18,6 +18,7 @@ $ctx = new-azurestoragecontext -StorageAccountName $s_name -StorageAccountKey $p
 
 write-host 'coping text file from azure blob....'; [datetime]::Now
 Get-AzureStorageBlobContent -Blob installer.xml  -Container vinay-storage-account-container -Destination C:\Windows\Temp\ -Context $ctx
+Get-AzureStorageBlobContent -Blob sqldetail.txt  -Container vinay-storage-account-container -Destination C:\Windows\Temp\ -Context $ctx
 write-host ' copied text file from azure blob....'; [datetime]::Now
 
 write-host ' copying solarwindinstaller  from azure blob....'; [datetime]::Now
