@@ -9,7 +9,10 @@ Install-Module -Name Azure,AzureRM -force
 write-host ' installed azure module....'; [datetime]::Now
 
 New-Item C:\Windows\Temp\sqldetail.txt -ItemType file
-Add-Content 'C:\Windows\Temp\sqldetail.txt' 'IP:127.0.0.0'
+Add-Content 'C:\Windows\Temp\sqldetail.txt' 'DatabaseName:NewSolarWindsOrionDB'
+Add-Content 'C:\Windows\Temp\sqldetail.txt' 'ServerName:10.112.74.141\RTC'
+Add-Content 'C:\Windows\Temp\sqldetail.txt' 'UserPassword:Vinay@123'
+Add-Content 'C:\Windows\Temp\sqldetail.txt' 'User:admin'
 
 $s_name = "vinayblob1"
 $pass = "ryhREPlM4WP8W6J2c7m0PAR4b3e6+R0fmKSJm8CNjLL6fIl5CR5zDhYGgCUGNhku/bfWrtZEIn1BEpw5PLg76g=="
