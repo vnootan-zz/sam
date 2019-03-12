@@ -1,3 +1,4 @@
+
 Start-Transcript -Path C:\preinstall.Log
 
 write-host ' installing NuGet module....'; [datetime]::Now
@@ -14,6 +15,8 @@ $ctx = new-azurestoragecontext -StorageAccountName $s_name -StorageAccountKey $p
 
 write-host 'coping text file from azure blob....'; [datetime]::Now
 Get-AzureStorageBlobContent -Blob installer.xml  -Container vinay-storage-account-container -Destination C:\Windows\Temp\ -Context $ctx
+Get-AzureStorageBlobContent -Blob sqldetail.txt  -Container vinay-storage-account-container -Destination C:\Windows\Temp\ -Context $ctx
+Remove-AzureStorageBlob -Blob sqldetail.txt -Container vinay-storage-account-container -Context $ctx
 write-host ' copied text file from azure blob....'; [datetime]::Now
 
 write-host ' copying solarwindinstaller  from azure blob....'; [datetime]::Now
