@@ -31,21 +31,21 @@ write-host ' starting installation solarwindinstaller....'; [datetime]::Now
 # .\Solarwinds-Orion-SAM-6.6.1-OfflineInstaller.exe /s /ConfigFile="C:\Windows\Temp\installer.xml"
 write-host ' installation completed solarwindinstaller....'; [datetime]::Now
 
-while(1)
-{
-$Solarwinds = Get-Process Solarwinds-Orion-SAM-6.6.1-OfflineInstaller -ErrorAction SilentlyContinue
-if ($Solarwinds) {
-   Write-Host " process running...sleep 5 sec"
-  Sleep 5
-  Remove-Variable Solarwinds
-  continue;
-}
-else {
-	write-host "process end"
-	Remove-Variable Solarwinds
-    break;
-}
-}
-exit 1
+#while(1)
+#{
+#$Solarwinds = Get-Process Solarwinds-Orion-SAM-6.6.1-OfflineInstaller -ErrorAction SilentlyContinue
+#if ($Solarwinds) {
+#   Write-Host " process running...sleep 5 sec"
+#  Sleep 5
+#  Remove-Variable Solarwinds
+#  continue;
+#}
+#else {
+#	write-host "process end"
+#	Remove-Variable Solarwinds
+#   break;
+#}
+#}
+#exit 1
 
 Stop-Transcript
