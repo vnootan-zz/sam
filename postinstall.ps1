@@ -18,6 +18,6 @@ else {
     break;
 }
 }
-exit 1
+#exit 1
 
 Stop-Transcript
