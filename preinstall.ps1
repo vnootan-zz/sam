@@ -10,13 +10,13 @@ Install-Module -Name Azure,AzureRM -force
 write-host ' installed azure module....'; [datetime]::Now
 
 $s_name = "vinayblob1"
-$pass = "ryhREPlM4WP8W6J2c7m0PAR4b3e6+R0fmKSJm8CNjLL6fIl5CR5zDhYGgCUGNhku/bfWrtZEIn1BEpw5PLg76g=="
+$pass = "MOSlYQq3cMy+ZsZtqUmaHBL3gZ2PQshjmyKimPLBupDYrq9EWnDcujXNY3XyPUUf3g/EcFLMPnZbdt4vGzZ5DA=="
 $ctx = new-azurestoragecontext -StorageAccountName $s_name -StorageAccountKey $pass
 
 write-host 'coping text file from azure blob....'; [datetime]::Now
 Get-AzureStorageBlobContent -Blob installer.xml  -Container vinay-storage-account-container -Destination C:\Windows\Temp\ -Context $ctx
-Get-AzureStorageBlobContent -Blob sqldetail.txt  -Container vinay-storage-account-container -Destination C:\Windows\Temp\ -Context $ctx
-Remove-AzureStorageBlob -Blob sqldetail.txt -Container vinay-storage-account-container -Context $ctx
+#Get-AzureStorageBlobContent -Blob sqldetail.txt  -Container vinay-storage-account-container -Destination C:\Windows\Temp\ -Context $ctx
+#Remove-AzureStorageBlob -Blob sqldetail.txt -Container vinay-storage-account-container -Context $ctx
 write-host ' copied text file from azure blob....'; [datetime]::Now
 
 write-host ' copying solarwindinstaller  from azure blob....'; [datetime]::Now
