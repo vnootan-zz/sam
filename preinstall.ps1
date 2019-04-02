@@ -24,39 +24,39 @@ Get-AzureStorageBlobContent -Blob Solarwinds-Orion-SAM-6.6.1-OfflineInstaller.ex
 write-host ' copied solarwindinstaller  from azure blob....'; [datetime]::Now
 
 #Copying sql details to installer file
-$newstreamreader = New-Object System.IO.StreamReader("C:\Windows\temp\sqldetail.txt")
+#$newstreamreader = New-Object System.IO.StreamReader("C:\Windows\temp\sqldetail.txt")
 
-$filePath = 'C:\Windows\temp\installer.xml'
-$xml=New-Object XML
-$xml.Load($filePath)
-$node=$xml.SilentConfig.Host.Info.Database
+#$filePath = 'C:\Windows\temp\installer.xml'
+#$xml=New-Object XML
+#$xml.Load($filePath)
+#$node=$xml.SilentConfig.Host.Info.Database
 
-$eachlinenumber = 1
-while (($readeachline =$newstreamreader.ReadLine()) -ne $null)
-{   
-    Write-Host $readeachline.Substring($readeachline.IndexOf(":")+1)
+#$eachlinenumber = 1
+#while (($readeachline =$newstreamreader.ReadLine()) -ne $null)
+#{   
+   # Write-Host $readeachline.Substring($readeachline.IndexOf(":")+1)
     
-    if($readeachline.ToLower().Contains('databasename'))
-        {
-            $node.DatabaseName=$readeachline.Substring($readeachline.IndexOf(":")+1)
-        }
-    elseif($readeachline.ToLower().Contains('servername'))
-        {
-            $node.ServerName=$readeachline.Substring($readeachline.IndexOf(":")+1)
-        }     
-    elseif($readeachline.ToLower().Contains('userpassword'))
-        {
-            $node.UserPassword=$readeachline.Substring($readeachline.IndexOf(":")+1)
-        }
-    elseif($readeachline.ToLower().Contains('user'))
-        {
-            $node.User=$readeachline.Substring($readeachline.IndexOf(":")+1)
-        }
+  #  if($readeachline.ToLower().Contains('databasename'))
+  #      {
+   #         $node.DatabaseName=$readeachline.Substring($readeachline.IndexOf(":")+1)
+ #       }
+  #  elseif($readeachline.ToLower().Contains('servername'))
+  #      {
+ #           $node.ServerName=$readeachline.Substring($readeachline.IndexOf(":")+1)
+ #       }     
+ #   elseif($readeachline.ToLower().Contains('userpassword'))
+ #       {
+ #           $node.UserPassword=$readeachline.Substring($readeachline.IndexOf(":")+1)
+ #       }
+ #   elseif($readeachline.ToLower().Contains('user'))
+ #       {
+ #           $node.User=$readeachline.Substring($readeachline.IndexOf(":")+1)
+#        }
 
-    $eachlinenumber++
-}
+#    $eachlinenumber++
+#}
 
-$xml.Save($filePath)
-$newstreamreader.Dispose()
+#$xml.Save($filePath)
+#$newstreamreader.Dispose()
 
 Stop-Transcript
