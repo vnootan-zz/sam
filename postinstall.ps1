@@ -1,7 +1,28 @@
 Start-Transcript -Path C:\postinstall.Log
 
-cd "C:\Windows\Temp"
+write-host ' installing NuGet module....'; [datetime]::Now
+Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+write-host ' installed NuGet module....'; [datetime]::Now
 
+write-host ' installing azure module....'; [datetime]::Now
+Install-Module -Name Azure,AzureRM -force
+write-host ' installed azure module....'; [datetime]::Now
+
+$s_name = "vinayblob1"
+$pass = "MOSlYQq3cMy+ZsZtqUmaHBL3gZ2PQshjmyKimPLBupDYrq9EWnDcujXNY3XyPUUf3g/EcFLMPnZbdt4vGzZ5DA=="
+$ctx = new-azurestoragecontext -StorageAccountName $s_name -StorageAccountKey $pass
+
+write-host 'coping text file from azure blob....'; [datetime]::Now
+Get-AzureStorageBlobContent -Blob installer.xml  -Container vinay-storage-account-container -Destination C:\Windows\Temp\ -Context $ctx
+#Get-AzureStorageBlobContent -Blob sqldetail.txt  -Container vinay-storage-account-container -Destination C:\Windows\Temp\ -Context $ctx
+#Remove-AzureStorageBlob -Blob sqldetail.txt -Container vinay-storage-account-container -Context $ctx
+write-host ' copied text file from azure blob....'; [datetime]::Now
+
+write-host ' copying solarwindinstaller  from azure blob....'; [datetime]::Now
+Get-AzureStorageBlobContent -Blob Solarwinds-Orion-SAM-6.6.1-OfflineInstaller.exe  -Container vinay-storage-account-container -Destination C:\Windows\Temp\ -Context $ctx
+write-host ' copied solarwindinstaller  from azure blob....'; [datetime]::Now
+
+cd "C:\Windows\Temp"
 .\Solarwinds-Orion-SAM-6.6.1-OfflineInstaller.exe /s /ConfigFile="C:\Windows\Temp\installer.xml"
 
 while(1)
