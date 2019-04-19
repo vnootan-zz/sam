@@ -1,0 +1,18 @@
+param([string]$dbServerName, [string]$databaseName, [string]$dbUserName, [string]$dbPassword)
+Start-Transcript -Path C:\Windows\Temp\sqldetaillog.Log
+
+#Copying sql details to installer file
+
+$filePath = 'C:\Windows\Temp\installer.xml'
+$xml=New-Object XML
+$xml.Load($filePath)
+$node=$xml.SilentConfig.Host.Info.Database
+
+$node.DatabaseName=$dbServerName     
+$node.ServerName=$databaseName     
+$node.User=$dbUserName    
+$node.UserPassword=$dbPassword
+
+$xml.Save($filePath)
+
+Stop-Transcript
