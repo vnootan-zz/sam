@@ -1,5 +1,6 @@
 param
 (
+	[bool]$isStandard,
 	[string]$productsToInstall,
 	[string]$dbServerName, 
 	[string]$databaseName, 
@@ -21,7 +22,14 @@ $pass = "MOSlYQq3cMy+ZsZtqUmaHBL3gZ2PQshjmyKimPLBupDYrq9EWnDcujXNY3XyPUUf3g/EcFL
 $ctx = new-azurestoragecontext -StorageAccountName $s_name -StorageAccountKey $pass
 
 write-host 'coping text file from azure blob....'; [datetime]::Now
-Get-AzureStorageBlobContent -Blob installer.xml -Container vinay-storage-account-container -Destination C:\Windows\Temp\ -Context $ctx
+if($isStandard)
+{
+	Get-AzureStorageBlobContent -Blob standard.xml -Container vinay-storage-account-container -Destination C:\Windows\Temp\ -Context $ctx
+}
+else
+{
+	Get-AzureStorageBlobContent -Blob express.xml -Container vinay-storage-account-container -Destination C:\Windows\Temp\ -Context $ctx	
+}
 #Get-AzureStorageBlobContent -Blob sqldetail.txt  -Container vinay-storage-account-container -Destination C:\Windows\Temp\ -Context $ctx
 #Remove-AzureStorageBlob -Blob sqldetail.txt -Container vinay-storage-account-container -Context $ctx
 write-host ' copied text file from azure blob....'; [datetime]::Now
@@ -30,18 +38,39 @@ write-host ' copying solarwindinstaller  from azure blob....'; [datetime]::Now
 Get-AzureStorageBlobContent -Blob Solarwinds-Orion-SAM-6.6.1-OfflineInstaller.exe  -Container vinay-storage-account-container -Destination C:\Windows\Temp\ -Context $ctx
 write-host ' copied solarwindinstaller  from azure blob....'; [datetime]::Now
 
-$filePath = 'C:\Windows\Temp\installer.xml'
+$filePath = 'C:\Windows\Temp\express.xml'
+if($isStandard)
+{
+	$filePath = 'C:\Windows\Temp\standard.xml'
+}
+
 $xml=New-Object XML
 $xml.Load($filePath)
 
 $node=$xml.SilentConfig.InstallerConfiguration
 $node.ProductsToInstall=$productsToInstall 
 
+if($isStandard)
+{
+	$node=$xml.SilentConfig.Host.Info.Database
+	$node.DatabaseName=$dbServerName     
+	$node.ServerName=$databaseName     
+	$node.User=$dbUserName    
+	$node.UserPassword=$dbPassword
+}
+
 $xml.Save($filePath)
 
 cd "C:\Windows\Temp"
 write-host ' starting installation solarwindinstaller....'; [datetime]::Now
-.\Solarwinds-Orion-SAM-6.6.1-OfflineInstaller.exe /s /ConfigFile="C:\Windows\Temp\installer.xml"
+if($isStandard)
+{
+	.\Solarwinds-Orion-SAM-6.6.1-OfflineInstaller.exe /s /ConfigFile="C:\Windows\Temp\standard.xml"
+}
+else
+{
+	.\Solarwinds-Orion-SAM-6.6.1-OfflineInstaller.exe /s /ConfigFile="C:\Windows\Temp\express.xml"
+}
 write-host ' installation completed solarwindinstaller....'; [datetime]::Now
 
 while(1)
