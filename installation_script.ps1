@@ -1,4 +1,6 @@
-param(
+param
+(
+	[string]$productsToInstall,
 	[string]$dbServerName, 
 	[string]$databaseName, 
 	[string]$dbUserName, 
@@ -27,6 +29,15 @@ write-host ' copied text file from azure blob....'; [datetime]::Now
 write-host ' copying solarwindinstaller  from azure blob....'; [datetime]::Now
 Get-AzureStorageBlobContent -Blob Solarwinds-Orion-SAM-6.6.1-OfflineInstaller.exe  -Container vinay-storage-account-container -Destination C:\Windows\Temp\ -Context $ctx
 write-host ' copied solarwindinstaller  from azure blob....'; [datetime]::Now
+
+$filePath = 'C:\Windows\Temp\installer.xml'
+$xml=New-Object XML
+$xml.Load($filePath)
+
+$node=$xml.SilentConfig.InstallerConfiguration
+$node.ProductsToInstall=$productsToInstall 
+
+$xml.Save($filePath)
 
 cd "C:\Windows\Temp"
 write-host ' starting installation solarwindinstaller....'; [datetime]::Now
