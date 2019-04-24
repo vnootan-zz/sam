@@ -1,13 +1,21 @@
 param
 (
-	[bool]$isStandard,
+	[string]$typeOfInstallation,
 	[string]$productsToInstall,
 	[string]$dbServerName, 
 	[string]$databaseName, 
 	[string]$dbUserName, 
 	[string]$dbPassword
 )
+
 Start-Transcript -Path C:\postinstall.Log
+
+if($typeOfInstallation -eq "false" -OR $typeOfInstallation -eq "False" -OR $typeOfInstallation -eq "FALSE") {
+	[bool]$isStandard = $false
+}
+else {
+	[bool]$isStandard = $true
+}
 
 write-host ' installing NuGet module....'; [datetime]::Now
 Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
