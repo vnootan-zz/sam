@@ -60,9 +60,9 @@ $node.ProductsToInstall=$productsToInstall
 
 if($isStandard)
 {
-	$node=$xml.SilentConfig.Host.Info.Database
-	$node.DatabaseName=$dbServerName     
-	$node.ServerName=$databaseName     
+	$node=$xml.SilentConfig.Host.Info.Database	
+	$node.ServerName=$dbServerName
+	$node.DatabaseName=$databaseName
 	$node.User=$dbUserName    
 	$node.UserPassword=$dbPassword
 }
