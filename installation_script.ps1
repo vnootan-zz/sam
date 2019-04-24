@@ -43,7 +43,7 @@ else
 write-host ' copied text file from azure blob....'; [datetime]::Now
 
 write-host ' copying solarwindinstaller  from azure blob....'; [datetime]::Now
-Get-AzureStorageBlobContent -Blob Solarwinds-Orion-SAM-6.6.1-OfflineInstaller.exe  -Container vinay-storage-account-container -Destination C:\Windows\Temp\ -Context $ctx
+Get-AzureStorageBlobContent -Blob Solarwinds-Orion-NCM-8.0-Beta2-OfflineInstaller.exe  -Container vinay-storage-account-container -Destination C:\Windows\Temp\ -Context $ctx
 write-host ' copied solarwindinstaller  from azure blob....'; [datetime]::Now
 
 $filePath = 'C:\Windows\Temp\express.xml'
@@ -73,17 +73,17 @@ cd "C:\Windows\Temp"
 write-host ' starting installation solarwindinstaller....'; [datetime]::Now
 if($isStandard)
 {
-	.\Solarwinds-Orion-SAM-6.6.1-OfflineInstaller.exe /s /ConfigFile="C:\Windows\Temp\standard.xml"
+	.\Solarwinds-Orion-NCM-8.0-Beta2-OfflineInstaller.exe /s /ConfigFile="C:\Windows\Temp\standard.xml"
 }
 else
 {
-	.\Solarwinds-Orion-SAM-6.6.1-OfflineInstaller.exe /s /ConfigFile="C:\Windows\Temp\express.xml"
+	.\Solarwinds-Orion-NCM-8.0-Beta2-OfflineInstaller.exe /s /ConfigFile="C:\Windows\Temp\express.xml"
 }
 write-host ' installation completed solarwindinstaller....'; [datetime]::Now
 
 while(1)
 {
-	$Solarwinds = Get-Process Solarwinds-Orion-SAM-6.6.1-OfflineInstaller -ErrorAction SilentlyContinue
+	$Solarwinds = Get-Process Solarwinds-Orion-NCM-8.0-Beta2-OfflineInstaller -ErrorAction SilentlyContinue
 	if ($Solarwinds) {
 	  Sleep 5
 	  Remove-Variable Solarwinds
