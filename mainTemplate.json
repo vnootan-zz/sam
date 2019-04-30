@@ -151,7 +151,7 @@
       }
     },
     "variables": {
-		"scriptFileUri": "[uri(parameters('_artifactsLocation'), concat('/test_script.ps1', parameters('_artifactsLocationSasToken')))]",
+		"scriptFileUri": "[uri(parameters('_artifactsLocation'), concat('/vnootan/sam/master/test_script.ps1', parameters('_artifactsLocationSasToken')))]",
 		"licenseType": "Windows_Server",
 		"networkInterfaceName": "[concat(parameters('virtualMachineName'),'-nic')]",
 		"networkSecurityGroupName": "[concat(parameters('virtualMachineName'),'-nsg')]",
