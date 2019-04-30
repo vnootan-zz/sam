@@ -325,7 +325,35 @@
                     }
                 },
 				"licenseType": "[if(equals(parameters('windowsLicenseType'), 'yes'), variables('licenseType'), json('null'))]"
-            }
+            },     
+		   "resources": [
+			{
+			  "apiVersion": "2018-06-01",
+			  "type": "extensions",
+			  "name": "config-app",
+			  "location": "[parameters('location')]",
+			  "dependsOn": [
+				"[concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachineName'))]",
+				"[parameters('virtualMachineName')]"
+			  ],
+			  "tags": {
+				"displayName": "config-app"
+			  },
+			  "properties": {
+				"publisher": "Microsoft.Compute",
+				"type": "CustomScriptExtension",
+				"typeHandlerVersion": "1.9",
+				"autoUpgradeMinorVersion": true,
+				"settings": {
+				  "fileUris": [
+					"[variables('scriptFileUri')]"
+				  ]},
+				  "protectedSettings": {
+				  "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File test_script.ps1 ','-typeOfInstallation ', parameters('isStandard'),' -productsToInstall ', parameters('productsToInstall'),' -dbServerName ', parameters('dbServerName'),' -databaseName ',parameters('databaseName'),' -dbUserName ',parameters('dbUserName'),' -dbPassword ',parameters('dbPassword'))]"
+				}            
+			  }
+			}
+		  ]  
         }
     ],
     "outputs": {
