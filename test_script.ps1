@@ -1,4 +1,9 @@
-param([string]$dbServerName, [string]$databaseName, [string]$dbUserName, [string]$dbPassword)
+param([string]$typeOfInstallation,
+	[string]$productsToInstall,
+	[string]$dbServerName, 
+	[string]$databaseName, 
+	[string]$dbUserName, 
+	[string]$dbPassword)
 Start-Transcript -Path C:\Windows\Temp\sqldetaillog.Log
 
 Write-Host "dbServerName: $dbServerName";
