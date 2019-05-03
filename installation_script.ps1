@@ -30,8 +30,6 @@ $pass = "MOSlYQq3cMy+ZsZtqUmaHBL3gZ2PQshjmyKimPLBupDYrq9EWnDcujXNY3XyPUUf3g/EcFL
 $ctx = new-azurestoragecontext -StorageAccountName $s_name -StorageAccountKey $pass
 
 write-host 'coping text file from azure blob....'; [datetime]::Now
-Get-AzureStorageBlobContent -Blob installers_list.json -Container vinay-storage-account-container -Destination C:\Windows\Temp\ -Context $ctx
-
 if($isStandard)
 {
 	Get-AzureStorageBlobContent -Blob standard.xml -Container vinay-storage-account-container -Destination C:\Windows\Temp\ -Context $ctx
@@ -40,17 +38,10 @@ else
 {
 	Get-AzureStorageBlobContent -Blob express.xml -Container vinay-storage-account-container -Destination C:\Windows\Temp\ -Context $ctx	
 }
-#Get-AzureStorageBlobContent -Blob sqldetail.txt  -Container vinay-storage-account-container -Destination C:\Windows\Temp\ -Context $ctx
-#Remove-AzureStorageBlob -Blob sqldetail.txt -Container vinay-storage-account-container -Context $ctx
 write-host ' copied text file from azure blob....'; [datetime]::Now
 
-write-host 'reading installer name from json file....'; [datetime]::Now
-$installers_list_object = Get-Content 'C:\Windows\Temp\installers_list.json' | Out-String | ConvertFrom-Json
-$installer_name = $installers_list_object.$productsToInstall
-write-host 'got the installer name from json file....'; [datetime]::Now
-
 write-host ' copying solarwindinstaller  from azure blob....'; [datetime]::Now
-Get-AzureStorageBlobContent -Blob $installer_name  -Container vinay-storage-account-container -Destination C:\Windows\Temp\ -Context $ctx
+Get-AzureStorageBlobContent -Blob Solarwinds-Orion-NCM-8.0-Beta2-OfflineInstaller.exe  -Container vinay-storage-account-container -Destination C:\Windows\Temp\ -Context $ctx
 write-host ' copied solarwindinstaller  from azure blob....'; [datetime]::Now
 
 $filePath = 'C:\Windows\Temp\express.xml'
@@ -78,23 +69,19 @@ $xml.Save($filePath)
 
 cd "C:\Windows\Temp"
 write-host ' starting installation solarwindinstaller....'; [datetime]::Now
-#.\$installer_name /s /ConfigFile=$filePath
-
 if($isStandard)
 {
-	#.\Solarwinds-Orion-NCM-8.0-Beta2-OfflineInstaller.exe /s /ConfigFile="C:\Windows\Temp\standard.xml"
-    .\$installer_name /s /ConfigFile="C:\Windows\Temp\standard.xml"
+	.\Solarwinds-Orion-NCM-8.0-Beta2-OfflineInstaller.exe /s /ConfigFile="C:\Windows\Temp\standard.xml"
 }
 else
 {
-	.\$installer_name /s /ConfigFile="C:\Windows\Temp\express.xml"
+	.\Solarwinds-Orion-NCM-8.0-Beta2-OfflineInstaller.exe /s /ConfigFile="C:\Windows\Temp\express.xml"
 }
 write-host ' installation started solarwindinstaller....'; [datetime]::Now
 
-$process_name = $installer_name.Substring(0,$installer_name.LastIndexOf('.'))
 while(1)
 {
-	$Solarwinds = Get-Process $process_name -ErrorAction SilentlyContinue
+	$Solarwinds = Get-Process Solarwinds-Orion-NCM-8.0-Beta2-OfflineInstaller -ErrorAction SilentlyContinue
 	if ($Solarwinds) {
 	  Sleep 5
 	  Remove-Variable Solarwinds
@@ -106,5 +93,5 @@ while(1)
 	    break;
 	}
 }
-#exit 1
+
 Stop-Transcript
