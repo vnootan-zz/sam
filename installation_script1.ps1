@@ -83,7 +83,7 @@ New-Item C:\Windows\Temp\installer.ps1 -ItemType file
 Add-Content 'C:\Windows\Temp\installer.ps1' $installer_name" /s /ConfigFile=""$filePath"""
 .\installer.ps1
 
-write-host ' installation completed solarwindinstaller....'; [datetime]::Now
+write-host ' installation started solarwindinstaller....'; [datetime]::Now
 
 $process_name = $installer_name.Substring(0,$installer_name.LastIndexOf('.'))
 while(1)
@@ -95,7 +95,7 @@ while(1)
 	  continue;
 	}
 	else {
-		write-host "process end"
+		write-host "process completed"
 		Remove-Variable Solarwinds
 	    break;
 	}
