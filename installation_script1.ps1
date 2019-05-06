@@ -76,13 +76,12 @@ if($isStandard)
 
 $xml.Save($filePath)
 
-cd "C:\Windows\Temp"
+New-Item C:\Windows\Temp\installer.ps1 -ItemType file
+Add-Content 'C:\Windows\Temp\installer.ps1' $installer_name" /s /ConfigFile=""$filePath"""
 write-host ' starting installation solarwindinstaller....'; [datetime]::Now
 
-New-Item C:\Windows\Temp\installer.ps1 -ItemType file
-Add-Content 'C:\Windows\Temp\installer.ps1' $installer_name" /s /ConfigFile=""$filePath"""
+cd "C:\Windows\Temp"
 .\installer.ps1
-
 write-host ' installation started solarwindinstaller....'; [datetime]::Now
 
 $process_name = $installer_name.Substring(0,$installer_name.LastIndexOf('.'))
