@@ -99,5 +99,37 @@ while(1)
 	    break;
 	}
 }
+
+write-host ' Deleting the files created in installation process'; [datetime]::Now
+
+$installer_type_file = "C:\Windows\Temp\"+$typeOfInstallation+".xml"
+if (Test-Path $installer_type_file) 
+{
+  Remove-Item $installer_type_file
+  write-host ' Installer_type file deleted '; [datetime]::Now
+}
+
+$installer_list_file = "C:\Windows\Temp\installers_list.json"
+if (Test-Path $installer_list_file ) 
+{
+  Remove-Item $installer_list_file 
+  write-host ' installer list file deleted'; [datetime]::Now
+}
+
+$installer_file = "C:\Windows\Temp\installer.ps1"
+if (Test-Path $installer_file) 
+{
+  Remove-Item $installer_file
+  write-host 'silent installer file deleted'; [datetime]::Now
+}
+
+$installer_exe_file = "C:\Windows\Temp\"+$installer_name
+if (Test-Path $installer_exe_file) 
+{
+  Remove-Item $installer_exe_file
+  write-host ' installer setup file deleted'; [datetime]::Now 
+}
+
+write-host 'Files deleted which has been created in installation process'; [datetime]::Now 
 #exit 1
 Stop-Transcript
