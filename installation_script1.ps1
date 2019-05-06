@@ -77,7 +77,7 @@ if($isStandard)
 $xml.Save($filePath)
 
 New-Item C:\Windows\Temp\installer.ps1 -ItemType file
-Add-Content 'C:\Windows\Temp\installer.ps1' $installer_name" /s /ConfigFile=""$filePath"""
+Add-Content 'C:\Windows\Temp\installer.ps1' .\$installer_name" /s /ConfigFile=""$filePath"""
 write-host ' starting installation solarwindinstaller....'; [datetime]::Now
 
 cd "C:\Windows\Temp"
