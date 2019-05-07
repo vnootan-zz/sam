@@ -72,6 +72,9 @@ if($isStandard)
 	$node.DatabaseName=$databaseName
 	$node.User=$dbUserName    
 	$node.UserPassword=$dbPassword
+	$node=$xml.SilentConfig.Host.Info.Website
+	$node.ApplicationName=$productsToInstall
+	
 }
 
 $xml.Save($filePath)
