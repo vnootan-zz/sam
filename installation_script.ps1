@@ -97,7 +97,7 @@ while(1)
 	  continue;
 	}
 	else {
-		write-host "process completed"
+		write-host "process completed"; [datetime]::Now
 		Remove-Variable Solarwinds
 	    break;
 	}
